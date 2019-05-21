@@ -18,10 +18,10 @@ pm-query -c Geersing_EHR_Sepsis.txt
 pm-query Geersing_EHR_Sepsis.txt abstract
 
 # download pmids for records matching a query
-pm-query Geersing_EHR_Sepsis uilist
+pm-query Geersing_EHR_Sepsis.txt uilist
 
 # download records in medline format
-pm-query Geersing_EHR_Sepsis medline
+pm-query Geersing_EHR_Sepsis.txt medline
 ```
 
 ## pm-auth
