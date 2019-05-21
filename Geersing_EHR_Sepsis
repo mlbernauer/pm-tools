@@ -1,0 +1,91 @@
+(
+  (
+    validate
+    OR predict$.ti.
+    OR rule$
+  ) 
+    OR 
+  (
+    predict$
+    AND (
+          outcome$
+          OR risk$
+          OR model$
+        )
+  )
+    OR
+  (
+    (
+      history
+      OR variable$
+      OR criteria
+      OR scor$
+      OR characteristic$
+      OR finding$
+      OR factor$
+    )
+    AND
+    (
+      predict$
+      OR model$
+      OR decision$
+      OR identify
+      OR prognose
+    )
+  )
+    OR
+  (
+    decision$
+    AND (
+          model$
+          OR clinical$
+          OR logistic models/
+        )
+  )
+    OR
+  (
+    prognostic
+    AND (
+          history
+          OR
+          variable$
+          OR criteria
+          OR scor$
+          OR characteristic$
+          OR finding$
+          OR factor$
+          OR model$
+        )
+  )
+    OR
+  (
+    "Stratification"
+    OR "ROC Curve"[Mesh]
+    OR "Discrimination"
+    OR "Discriminate"
+    OR "c-statistic"
+    OR "c statistic"
+    OR "Area under the curve"
+    OR "AUC"
+    OR "Calibration"
+    OR "Indices"
+    OR "Algorithm"
+    OR "Multivariable"
+  )
+)
+AND
+(
+  "Medical Records"[Mesh]
+  OR "Electronic Health Record"
+  OR "Electronic Health Records"
+  OR "Electronic Medical Record"
+  OR "Electronic Medical Records"
+  OR EHR
+  OR EHRs
+  OR EMR
+  OR EMRs
+)
+AND
+(
+  "Sepsis"[Mesh]
+)

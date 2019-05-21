@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This script is used to inspect MeSH Terms from a Medline File
+
+[ $# -ge 1 -a -f "$1" ] && input="$1" || input="-"
+
+cat $input | grep '^MH ' | sed 's/MH \{1,\}- //g'

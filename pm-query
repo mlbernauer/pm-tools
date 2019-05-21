@@ -1,0 +1,40 @@
+#!/bin/bash
+# Michael L. Bernauer
+# pubmed_query.sh
+#
+# This script is used to retrieve query results form pubmed.
+#
+# Examples:
+# 
+# Determine how many records match a particular query
+# pubmed -c <query-file>
+#
+# Retrieve results in medline format
+# pubmed <query-file> medline
+#
+# Retrieve results in abstract format
+# pubmed <query-file> abstract
+#
+# Retrieve list of pubmed IDs
+# pubmed <query-file> uilist
+
+case $1 in
+    -c)
+        query=$(cat $2 | egrep -v '^#|^$' | tr -d '\n' | sed -e 's/( \{1,\}/(/g' -e 's/ \{1,\})/)/g' -e 's/ \{1,\}/%20/g')
+        esearch_url="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&usehistory=y$retmax=100000"
+        esearch_result=$(curl -s -g $esearch_url)
+        cnt=$(echo $esearch_result | sed -n "s/.*<eSearchResult><Count>\(.*\)<\/Count><RetMax.*/\1/p")
+        echo $cnt 
+
+   ;;
+   *)
+        filetype=$2
+        query=$(cat $1 | egrep -v '^#|^$' | tr -d '\n' | sed -e 's/( \{1,\}/(/g' -e 's/ \{1,\})/)/g' -e 's/ \{1,\}/%20/g')
+        esearch_url="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${query}&usehistory=y$retmax=100000"
+        esearch_result=$(curl -s -g $esearch_url)
+        key=$(echo $esearch_result | sed -n 's/.*<QueryKey>\([0-9]*\)<\/QueryKey>.*/\1/p')
+        env=$(echo $esearch_result | sed -n 's/.*<WebEnv>\(.*\)<\/WebEnv>.*/\1/p')
+        efetch_url="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&query_key=${key}&WebEnv=${env}&retmode=text&rettype=${filetype}&retmax=100000"        
+        curl -s -g $efetch_url
+        ;;
+esac
